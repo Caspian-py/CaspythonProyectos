@@ -1,0 +1,14 @@
+[
+    {
+        "tarea": "Aprender python",
+        "estado": false
+    },
+    {
+        "tarea": "Ser un pythonic",
+        "estado": false
+    },
+    {
+        "tarea": "Hacer que la funcion marcar funcione.",
+        "estado": true
+    }
+]
