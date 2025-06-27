@@ -1,0 +1,49 @@
+PYTHON
+🔹 1. Administrador de tareas en consola
+•	Módulos útiles: os, json
+•	Aprendes: funciones, listas, lectura/escritura de archivos, estructuras de control.
+________________________________________
+🔹 2. Simulador de ventas y stock
+•	Funcionalidades: catálogo, carrito, pago simulado, control de inventario
+•	Estructura: diccionarios para representar productos y stock.
+•	Aprendes: lógica secuencial compleja y estructuras anidadas.
+________________________________________
+🔹 3. Gestor de contraseñas
+•	Funcionalidades: guardar contraseñas encriptadas, buscarlas por servicio
+•	Módulos: hashlib o cryptography, json
+•	Aprendes: hashing, manejo seguro de datos, persistencia de archivos.
+________________________________________
+🔹 4. Conversor de divisas en consola con API
+•	Módulos: requests
+•	Funcionalidad: conexión a API para tasas de cambio, conversión entre monedas
+•	Aprendes: manejo de APIs, validación de datos, modularización.
+________________________________________
+🔹 5. Scraper de precios o noticias
+•	Módulos: requests, BeautifulSoup
+•	Funcionalidad: extraer datos útiles desde una web real.
+•	Aprendes: navegación por HTML, automatización básica.
+________________________________________
+🔹 6. Simulador de un juego de dados por turnos
+•	Jugadores: varios, dados, reglas personalizadas
+•	Aprendes: uso de random, control de flujo, listas.
+•	Desafío adicional: guardar los resultados en un archivo.
+________________________________________
+🔹 7. Encuesta de usuarios con resultados gráficos
+•	Módulos: matplotlib
+•	Funcionalidad: los usuarios responden una encuesta y se grafican los resultados.
+•	Aprendes: entrada múltiple, almacenamiento, visualización de datos.
+________________________________________
+🔹 8. Mini explorador de archivos
+•	Módulos: os, shutil
+•	Funcionalidad: listar carpetas, mover/copiar/borrar archivos, ver contenido.
+•	Aprendes: manipulación del sistema de archivos.
+________________________________________
+🔹 9. Chat simulado local (con historial)
+•	Funcionalidad: ingresar nombre de usuario y chatear desde la misma terminal
+•	Aprendes: trabajar con archivos .txt, timestamps, funciones reutilizables.
+________________________________________
+🔹 10. Simulador de reservas de citas
+•	Funcionalidad: elegir fechas, evitar duplicados, guardar reservas.
+•	Aprendes: validación, manejo de fechas (datetime), listas de diccionarios.
+________________________________________
+
