@@ -1,0 +1,82 @@
+[
+    {
+        "nombre": "Mouse",
+        "stock": 0
+    },
+    {
+        "nombre": "Teclado",
+        "stock": 5
+    },
+    {
+        "nombre": "Monitor",
+        "stock": 2
+    },
+    {
+        "nombre": "Laptop",
+        "stock": 3
+    },
+    {
+        "nombre": "Disco Duro SSD",
+        "stock": 7
+    },
+    {
+        "nombre": "Memoria RAM 8GB",
+        "stock": 4
+    },
+    {
+        "nombre": "Auriculares",
+        "stock": 6
+    },
+    {
+        "nombre": "Micr\u00c3\u00b3fono USB",
+        "stock": 1
+    },
+    {
+        "nombre": "C\u00c3\u00a1mara Web",
+        "stock": 0
+    },
+    {
+        "nombre": "Cable HDMI",
+        "stock": 12
+    },
+    {
+        "nombre": "Router Wi-Fi",
+        "stock": 2
+    },
+    {
+        "nombre": "Silla Ergon\u00c3\u00b3mica",
+        "stock": 0
+    },
+    {
+        "nombre": "Curso Python",
+        "stock": 1
+    },
+    {
+        "nombre": "Curso Linux",
+        "stock": 3
+    },
+    {
+        "nombre": "Curso Hacking \u00c3\u2030tico",
+        "stock": 5
+    },
+    {
+        "nombre": "Power Bank",
+        "stock": 8
+    },
+    {
+        "nombre": "Tablet Android",
+        "stock": 2
+    },
+    {
+        "nombre": "Soporte de Laptop",
+        "stock": 10
+    },
+    {
+        "nombre": "Mouse Pad XL",
+        "stock": 0
+    },
+    {
+        "nombre": "USB 64GB",
+        "stock": 9
+    }
+]
