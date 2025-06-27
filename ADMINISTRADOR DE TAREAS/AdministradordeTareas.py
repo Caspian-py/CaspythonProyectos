@@ -21,11 +21,11 @@ def ImportarJson():
     
 tareas = ImportarJson()
 
-def GuardarJson(dato):
+def GuardarJson(datos):
     try:
         with open("datos.json", "w") as file:
-            json.dump(dato, file, indent=4)
-    except ValueError:
+            json.dump(datos, file, indent=4)
+    except (TypeError, OSError):
         print("Error al crear archivo Json, comuniquese con el desarrollador del programa. ⚠️")
 
 def AgregarTarea():
@@ -38,16 +38,15 @@ def AgregarTarea():
         tarea = input("📝 Tarea: ").strip().capitalize()
         if tarea.lower() == 'salir':
             return
-        if len(tarea) <= 7:
-            print("SU TAREA TIENE POCOS DETALLES, POR FAVOR INGRESE NUEVAMENTE CON MAS DETALLES. ⚠️")
+        if len(tarea.split()) < 3:
+            print("AGREGA MAS DETALLES (MINIMO 3 PALABRAS). ⚠️")
             input()
             continue
 
         else:
-            existe = False
-            for t in tareas:
-                if tarea.lower() == t['tarea'].lower():
-                    existe = True
+            
+            existe = any(tarea.lower() == t['tarea'].lower() for t in tareas)
+
             if existe == False:
                 tareas.append(
                     {
@@ -55,6 +54,7 @@ def AgregarTarea():
                         "estado": False,
                     }
                 )
+                GuardarJson(tareas)
             else:
                 print("NO SE PUEDEN REPETIR LAS TAREAS. ⚠️")
                 input()
@@ -85,6 +85,7 @@ def MarcarTarea():
                 input()
             else:
                 tareas[marcar - 1]['estado'] = True
+                GuardarJson(tareas)
                 return
 
 def EliminarTarea():
@@ -118,6 +119,7 @@ def EliminarTarea():
                 return
             if validacion == codigo:
                 tareas.pop(eliminar - 1)
+                GuardarJson(tareas)
                 return
                 
 def MostrarTareas():                
@@ -125,9 +127,12 @@ def MostrarTareas():
     print("-" * 40)
     print(" ID  |        TAREAS           | ESTADO ")
     print("-" * 40)
-    for id, t in enumerate(tareas):
-        
-        print(f"📌 {id + 1}) {t['tarea']}  {'✅' if t['estado']==True else '⏳'}")
+
+    if not tareas:
+        print("No tienes tareas.")
+    else:
+        for id, t in enumerate(tareas):
+            print(f"📌 {id + 1}) {t['tarea']}  {'✅' if t['estado']==True else '⏳'}")
     print("-" * 40)
 
 

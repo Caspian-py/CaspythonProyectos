@@ -1,14 +1,22 @@
 [
     {
-        "tarea": "Aprender python",
+        "tarea": "Corregir todos los errores.",
         "estado": false
     },
     {
-        "tarea": "Ser un pythonic",
-        "estado": false
+        "tarea": "Corregir error 2",
+        "estado": true
     },
     {
-        "tarea": "Hacer que la funcion marcar funcione.",
+        "tarea": "Corregir error 3",
+        "estado": true
+    },
+    {
+        "tarea": "Corregir error 4",
+        "estado": true
+    },
+    {
+        "tarea": "Corregir error 5",
         "estado": true
     }
 ]
