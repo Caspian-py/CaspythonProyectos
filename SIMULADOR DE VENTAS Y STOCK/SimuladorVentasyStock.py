@@ -37,8 +37,12 @@ adm = ImportarJsonUsser()
 
 
 def Guardarjson(catalogo):
-    with open("catalogo.json", "w") as f:
-        json.dump(catalogo, f, indent=4)
+    try:
+        with open("catalogo.json", "w") as f:
+            json.dump(catalogo, f, indent=4)
+            return True
+    except (PermissionError, OSError):
+        return False
 
 def Login():
     clear()
@@ -87,20 +91,41 @@ def MostrarCatalogoAdm():
 def agregar():
     while True:
         clear()
-        print("AGREGAR PRODUCTO NUEVO".center(ancho))
+        print("🆕 AGREGAR PRODUCTO NUEVO 🆕".center(ancho))
         print()
         MostrarCatalogoAdm()
-        print("NUEVO PRODUCTO: ")
+        print("NUEVO PRODUCTO 📦: ")
         print()
-        nombre = input("Nombre Producto: ").strip().lower()
-        stock = int(input("Stock: "))
-        if any(nombre == p['nombre'].lower() for p in catalogo):
-            input("NOMBRE DE PRODUCTO YA ESTA AGREGADO")
+        nombre = input("🏷️  Nombre Producto: ").strip().lower()
+        if len(nombre) < 4:
+            input("NOMNBRE DEMASIADO CORTO ❌⚠️")
             continue
-        input()
-    
+        elif nombre.lower() == "cancelar":
+            return
+        try:
+            stock = int(input("Stock 🔢: "))
+            if stock < 0:
+                raise ValueError
+        except ValueError:
+            input("STOCK INVALIDO ❌⚠️")
+            continue
         
-
+        if any(nombre == p['nombre'].lower() for p in catalogo):
+            input("EL PRODUCTO YA ESTA REGISTRADO ❌⚠️")
+            continue
+        else:
+            catalogo.append(
+                {
+                    "nombre": nombre.capitalize(),
+                    "stock": stock
+                }
+            )
+            if Guardarjson(catalogo):
+                input("AGREGADO CORRECTAMENTE ✅")
+            else:
+                input("ERROR AL AGREGAR EL PROPUCTO ❌⚠️")
+        if input("➕ DESEAR AGREGAR OTRO? S/N: ").strip().lower() != "s":
+            return        
 
 def MenuAdministrador():
     if not Login():

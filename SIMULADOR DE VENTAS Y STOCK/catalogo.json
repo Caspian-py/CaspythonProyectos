@@ -78,5 +78,13 @@
     {
         "nombre": "USB 64GB",
         "stock": 9
+    },
+    {
+        "nombre": "Vidrio 45cm x 45cm",
+        "stock": 11
+    },
+    {
+        "nombre": "Tomate",
+        "stock": 20
     }
 ]
