@@ -1,11 +1,7 @@
 [
     {
-        "nombre": "Mouse",
-        "stock": 0
-    },
-    {
         "nombre": "Teclado",
-        "stock": 5
+        "stock": 0
     },
     {
         "nombre": "Monitor",
@@ -13,7 +9,7 @@
     },
     {
         "nombre": "Laptop",
-        "stock": 3
+        "stock": 0
     },
     {
         "nombre": "Disco Duro SSD",
@@ -28,12 +24,12 @@
         "stock": 6
     },
     {
-        "nombre": "Micr\u00c3\u00b3fono USB",
-        "stock": 1
+        "nombre": "Microfono usb",
+        "stock": -1
     },
     {
-        "nombre": "C\u00c3\u00a1mara Web",
-        "stock": 0
+        "nombre": "Camara web",
+        "stock": 3
     },
     {
         "nombre": "Cable HDMI",
@@ -56,8 +52,8 @@
         "stock": 3
     },
     {
-        "nombre": "Curso Hacking \u00c3\u2030tico",
-        "stock": 5
+        "nombre": "Curso hacking etico",
+        "stock": 0
     },
     {
         "nombre": "Power Bank",
@@ -82,9 +78,5 @@
     {
         "nombre": "Vidrio 45cm x 45cm",
         "stock": 11
-    },
-    {
-        "nombre": "Tomate frances",
-        "stock": 12
     }
 ]

@@ -7,8 +7,10 @@
 """
 import json
 import os
+import random
 ancho = os.get_terminal_size().columns
 import getpass
+import string
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -104,6 +106,8 @@ def agregar():
             return
         try:
             stock = int(input("Stock 🔢: "))
+            if stock < 0:
+                raise ValueError
         except ValueError:
             input("STOCK INVALIDO ❌⚠️")
             continue
@@ -123,65 +127,101 @@ def agregar():
             else:
                 input("ERROR AL AGREGAR EL PROPUCTO ❌⚠️")
         if input("➕ DESEAR AGREGAR OTRO? S/N: ").strip().lower() != "s":
-            return        
+            return  
+              
 def modificar():
     while True:
         clear()
-        print("MODIFICAR PRODUCTO".center(ancho))
+        print("✏️ MODIFICAR PRODUCTO ✏️".center(ancho))
         print()
         MostrarCatalogoAdm()
-        print("SELECCIONA EL ID:")
+        print("🔢 SELECCIONA EL ID (0 para salir):")
         try:
-            idi = int(input())
+            idi = int(input("ID 🔢: "))
             if idi == 0:
                 return
             id = idi - 1
         except ValueError:
-            input("ID NO VALIDO")
+            input("ID NO VALIDO ❌⚠️")
             continue
-        if id > len(catalogo) or id < 0:
-            input("ID NO ENCONTRADO")
+        if id >= len(catalogo) or id < 0:
+            input("ID NO ENCONTRADO ❌⚠️")
             continue
         else:
             
             while True:
                 clear()
-                print("MODIFICANDO...")
+                print("🔧 MODIFICANDO PRODUCTO...")
                 print(f"{'Nombre':<20} | {'Stock':^5}")
                 print("-" * 25)
                 print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['stock']:^5} U")
                 print("-" * 25)
-                n = input("Nombre Nuevo: ").strip().lower()
+                n = input("🏷️  Nombre Nuevo: ").strip().lower()
                 if n == "cancelar":
                     break
                 elif len(n) < 4:
-                    input("NOMBRE DEMASIADO CORTO")
+                    input("NOMBRE DEMASIADO CORTO ❌⚠️")
                     continue
-                elif any(n == p['nombre'].lower().strip() for p in catalogo):
-                    input("NOMBRE DE PRODUCTO OCUPADO")
-                    continue
+                if n != catalogo[id]['nombre'].lower().strip():
+                    if any(n == p['nombre'].lower().strip() for p in catalogo):
+                        input("NOMBRE YA REGISTRADO ❌⚠️")
+                        continue
+                
                 try:
-                    s = int(input("Stock Nuevo: "))
+                    s = int(input("📦 Stock Nuevo: "))
+                    if s < 0:
+                        raise ValueError
                 except ValueError:
-                    input("STOCK INVALIDO")
+                    input("STOCK INVALIDO ❌⚠️")
                     continue
                 catalogo[id]['nombre'] = n.capitalize()
                 catalogo[id]['stock'] = s
                 break
-            if Guardarjson(catalogo):
-                input("MODIFICADO CORRECTAMENTE")
-            else:
-                input("ERROR AL GUARDAR LA MODIFICACION EN MEMORIA")
-            
-            if input("SEGUIR MODIFICANDO? S/N: ") != "s":
-                return
+            Guardarjson(catalogo)
 
-        if input("QUIERES SEGUIR MODIFICANDO? S/N: ").strip().lower() != "s":
+        if input("DESEAR MODIFICAR OTRO PRODUCTO? (S/N) ➕: ").strip().lower() != "s":
             return
         
+def eliminar():
+    while True:
+        clear()
+        print("ELIMINAR PRODUCTO".center(ancho))
+        MostrarCatalogoAdm()
+        print("SELECCIONA EL ID (0 para salir)")
+        
+        try:
+            idi = int(input("ID 🔢: "))
+            if idi == 0:
+                return
+            id = idi - 1
+            if id < 0 or id >= len(catalogo):
+                raise ValueError
+        except ValueError:
+            input("ID NO VALIDO")
+            continue
+        clear()
+        print("ELIMINANDO PRODUCTO...")
+        print(f"{'Nombre':>20} | {'stock':^5}")
+        print("-" * 25)
+        print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['stock']}")
+        print("-" * 25)
+        codigo = ''.join(random.choices(string.ascii_letters + string.digits, k = 5))
+        print(f"CODIGO: {codigo}")
+        if input("SI ESTAS SEGURO DE ELIMINAR DIGITA EL CODIGO CORRECTAMENTE: ") == codigo:
+            catalogo.pop(id)
+            Guardarjson(catalogo)
+            print("ELIMINADO CORRECTAMENTE")
+        else:
+            print("ELIMINACION CANCELADA")
+        if input("DESEAR ELIMINAR OTRO PRODUCTO? (S/N): ").lower().strip() != "s":
+            return
+            
 
         
 
+
+            
+        
         
 
 def MenuAdministrador():
@@ -209,12 +249,13 @@ def MenuAdministrador():
             elif opt == "modificar":
                 modificar()
             elif opt == "eliminar":
-                input("LLAMAMOS A LA FUNCION ELIMINAR")
+                eliminar()
             else:
                 input("OPCION NO ENCONTRADA EN EL MENU ❌⚠️ ")
 
 def main():
     while True:
+        
         clear()
         print("🛍️ SIMULADOR DE VENTAS - CASPIAN 🛍️".center(ancho))
         print()
