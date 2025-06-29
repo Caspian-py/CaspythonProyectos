@@ -104,8 +104,6 @@ def agregar():
             return
         try:
             stock = int(input("Stock 🔢: "))
-            if stock < 0:
-                raise ValueError
         except ValueError:
             input("STOCK INVALIDO ❌⚠️")
             continue
@@ -126,6 +124,65 @@ def agregar():
                 input("ERROR AL AGREGAR EL PROPUCTO ❌⚠️")
         if input("➕ DESEAR AGREGAR OTRO? S/N: ").strip().lower() != "s":
             return        
+def modificar():
+    while True:
+        clear()
+        print("MODIFICAR PRODUCTO".center(ancho))
+        print()
+        MostrarCatalogoAdm()
+        print("SELECCIONA EL ID:")
+        try:
+            idi = int(input())
+            if idi == 0:
+                return
+            id = idi - 1
+        except ValueError:
+            input("ID NO VALIDO")
+            continue
+        if id > len(catalogo) or id < 0:
+            input("ID NO ENCONTRADO")
+            continue
+        else:
+            
+            while True:
+                clear()
+                print("MODIFICANDO...")
+                print(f"{'Nombre':<20} | {'Stock':^5}")
+                print("-" * 25)
+                print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['stock']:^5} U")
+                print("-" * 25)
+                n = input("Nombre Nuevo: ").strip().lower()
+                if n == "cancelar":
+                    break
+                elif len(n) < 4:
+                    input("NOMBRE DEMASIADO CORTO")
+                    continue
+                elif any(n == p['nombre'].lower().strip() for p in catalogo):
+                    input("NOMBRE DE PRODUCTO OCUPADO")
+                    continue
+                try:
+                    s = int(input("Stock Nuevo: "))
+                except ValueError:
+                    input("STOCK INVALIDO")
+                    continue
+                catalogo[id]['nombre'] = n.capitalize()
+                catalogo[id]['stock'] = s
+                break
+            if Guardarjson(catalogo):
+                input("MODIFICADO CORRECTAMENTE")
+            else:
+                input("ERROR AL GUARDAR LA MODIFICACION EN MEMORIA")
+            
+            if input("SEGUIR MODIFICANDO? S/N: ") != "s":
+                return
+
+        if input("QUIERES SEGUIR MODIFICANDO? S/N: ").strip().lower() != "s":
+            return
+        
+
+        
+
+        
 
 def MenuAdministrador():
     if not Login():
@@ -150,7 +207,7 @@ def MenuAdministrador():
             elif opt == "agregar":
                 agregar()
             elif opt == "modificar":
-                input("LLAMAMOS A LA FUNCION MODIFICAR")
+                modificar()
             elif opt == "eliminar":
                 input("LLAMAMOS A LA FUNCION ELIMINAR")
             else:
