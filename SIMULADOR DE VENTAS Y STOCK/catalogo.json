@@ -1,82 +1,107 @@
 [
     {
         "nombre": "Teclado",
+        "precio": 75.0,
         "stock": 0
     },
     {
         "nombre": "Monitor",
+        "precio": 540.0,
         "stock": 2
     },
     {
         "nombre": "Laptop",
+        "precio": 2650.0,
         "stock": 0
     },
     {
         "nombre": "Disco Duro SSD",
+        "precio": 240.0,
         "stock": 7
     },
     {
         "nombre": "Memoria RAM 8GB",
+        "precio": 150.0,
         "stock": 4
     },
     {
         "nombre": "Auriculares",
+        "precio": 90.0,
         "stock": 6
     },
     {
-        "nombre": "Microfono usb",
+        "nombre": "Microfono USB",
+        "precio": 130.0,
         "stock": -1
     },
     {
-        "nombre": "Camara web",
+        "nombre": "Camara Web",
+        "precio": 110.0,
         "stock": 3
     },
     {
         "nombre": "Cable HDMI",
+        "precio": 35.0,
         "stock": 12
     },
     {
         "nombre": "Router Wi-Fi",
+        "precio": 160.0,
         "stock": 2
     },
     {
         "nombre": "Silla Ergon\u00c3\u00b3mica",
+        "precio": 720.0,
         "stock": 0
     },
     {
         "nombre": "Curso Python",
+        "precio": 199.0,
         "stock": 1
     },
     {
         "nombre": "Curso Linux",
+        "precio": 199.0,
         "stock": 3
     },
     {
-        "nombre": "Curso hacking etico",
+        "nombre": "Curso Hacking \u00c3\u2030tico",
+        "precio": 299.0,
         "stock": 0
     },
     {
         "nombre": "Power Bank",
+        "precio": 85.0,
         "stock": 8
     },
     {
         "nombre": "Tablet Android",
+        "precio": 980.0,
         "stock": 2
     },
     {
         "nombre": "Soporte de Laptop",
+        "precio": 45.0,
         "stock": 10
     },
     {
         "nombre": "Mouse Pad XL",
+        "precio": 30.0,
         "stock": 0
     },
     {
         "nombre": "USB 64GB",
+        "precio": 65.0,
         "stock": 9
     },
     {
-        "nombre": "Vidrio 45cm x 45cm",
-        "stock": 11
+        "nombre": "Pizza",
+        "precio": 19.0,
+        "stock": 9
+    },
+    {
+        "nombre": "Oreo",
+        "precio": 3,
+        "stock": 10
     }
 ]

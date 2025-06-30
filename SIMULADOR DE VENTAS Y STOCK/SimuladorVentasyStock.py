@@ -66,44 +66,50 @@ def Login():
 
 def MostrarCatalogoMenu():
     print("📦 CATALOGO DISPONIBLE 📦".center(ancho))
-    print("-" * 50)
-    print(f"{'ID':^4} | {'Nombre':<25} | {'Stock':^5}")
-    print("-" * 50)
+    print("-" * 60)
+    print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
+    print("-" * 60)
     
     for id, producto in enumerate(catalogo):
         if producto['stock'] > 0:
-            print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['stock']:^5} U")
+            print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5} U")
     if len(catalogo) <= 0:
-        print("❌ CATALOGO VACIO ❌".center(25))
-    print("-" * 50)
+        print("❌ CATALOGO VACIO ❌".center(30))
+    print("-" * 60)
 
 def MostrarCatalogoAdm():
     
     print("📦 CATALOGO COMPLETO 📦".center(ancho))
-    print("-" * 50)
-    print(f"{'ID':^4} | {'Nombre':<25} | {'Stock':^5}")
-    print("-" * 50)
+    print("-" * 60)
+    print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
+    print("-" * 60)
     
     for id, producto in enumerate(catalogo):
-        print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['stock']:^5} U")
+        print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5} U")
     if len(catalogo) <= 0:
-        print("❌ CATALOGO VACIO ❌".center(25))
-    print("-" * 50)
+        print("❌ CATALOGO VACIO ❌".center(30))
+    print("-" * 60)
 
 def agregar():
     while True:
         clear()
         print("🆕 AGREGAR PRODUCTO NUEVO 🆕".center(ancho))
         print()
-        MostrarCatalogoAdm()
         print("NUEVO PRODUCTO 📦: ")
         print()
         nombre = input("🏷️  Nombre Producto: ").strip().lower()
         if len(nombre) < 4:
-            input("NOMNBRE DEMASIADO CORTO ❌⚠️")
+            input("NOMBRE DEMASIADO CORTO ❌⚠️")
             continue
         elif nombre.lower() == "cancelar":
             return
+        try:
+            precio = float(input("Precio 💰: "))
+            if precio <= 0:
+                raise ValueError
+        except ValueError:
+            input("PRECIO INVALIDO ❌⚠️")
+            continue
         try:
             stock = int(input("Stock 🔢: "))
             if stock < 0:
@@ -119,6 +125,7 @@ def agregar():
             catalogo.append(
                 {
                     "nombre": nombre.capitalize(),
+                    "precio": round(precio, 2),
                     "stock": stock
                 }
             )
@@ -152,10 +159,10 @@ def modificar():
             while True:
                 clear()
                 print("🔧 MODIFICANDO PRODUCTO...")
-                print(f"{'Nombre':<20} | {'Stock':^5}")
-                print("-" * 25)
-                print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['stock']:^5} U")
-                print("-" * 25)
+                print(f"{'Nombre':<20} | {'Precio':<10} | {'Stock':^5}")
+                print("-" * 45)
+                print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['precio']:<10} | {catalogo[id]['stock']:^5} U")
+                print("-" * 45)
                 n = input("🏷️  Nombre Nuevo: ").strip().lower()
                 if n == "cancelar":
                     break
@@ -166,7 +173,13 @@ def modificar():
                     if any(n == p['nombre'].lower().strip() for p in catalogo):
                         input("NOMBRE YA REGISTRADO ❌⚠️")
                         continue
-                
+                try:
+                    p = float(input("Precio 💰: "))
+                    if p <= 0:
+                        raise ValueError
+                except ValueError:
+                    input("PRECIO INVALIDO ❌⚠️")
+                    continue
                 try:
                     s = int(input("📦 Stock Nuevo: "))
                     if s < 0:
@@ -175,6 +188,7 @@ def modificar():
                     input("STOCK INVALIDO ❌⚠️")
                     continue
                 catalogo[id]['nombre'] = n.capitalize()
+                catalogo[id]['precio'] = round(p, 2)
                 catalogo[id]['stock'] = s
                 break
             Guardarjson(catalogo)
@@ -201,10 +215,10 @@ def eliminar():
             continue
         clear()
         print("ELIMINANDO PRODUCTO...")
-        print(f"{'Nombre':>20} | {'stock':^5}")
-        print("-" * 25)
-        print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['stock']}")
-        print("-" * 25)
+        print(f"{'Nombre':>20} | {'Precio':<10} | {'stock':^5}")
+        print("-" * 45)
+        print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['precio']:<10} | {catalogo[id]['stock']}")
+        print("-" * 45)
         codigo = ''.join(random.choices(string.ascii_letters + string.digits, k = 5))
         print(f"CODIGO: {codigo}")
         if input("SI ESTAS SEGURO DE ELIMINAR DIGITA EL CODIGO CORRECTAMENTE: ") == codigo:
@@ -215,14 +229,6 @@ def eliminar():
             print("ELIMINACION CANCELADA")
         if input("DESEAR ELIMINAR OTRO PRODUCTO? (S/N): ").lower().strip() != "s":
             return
-            
-
-        
-
-
-            
-        
-        
 
 def MenuAdministrador():
     if not Login():
