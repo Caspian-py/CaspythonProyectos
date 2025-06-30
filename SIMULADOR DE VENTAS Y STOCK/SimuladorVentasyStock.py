@@ -259,7 +259,7 @@ def MenuAdministrador():
             else:
                 input("OPCION NO ENCONTRADA EN EL MENU ❌⚠️ ")
 def MostrarCarro():
-    print("CARRO DE COMPRAS".center(ancho))
+    print("CARRO DE COMPRAS".center(60))
     print("-" * 60)
     print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
     print("-" * 60)
@@ -268,9 +268,55 @@ def MostrarCarro():
         print("CARRO VACIO".center(60))
     else:
         for id, producto in enumerate(carro):
-            print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5}")
+            print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['cantidad']:^5}")
     print("-" * 60)
 
+def SeleccionProducto(id):
+    while True:
+        clear()
+        print("PRODUCTO SELECCIONADO")
+        print("-" * 40)
+        print(f"{'Nombre':<20} | {'Precio':<10} | {'Stock':^5}")
+        print("-" * 40)
+        print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['precio']:<10} | {catalogo[id]['stock']:^5}")
+        print("-" * 40)
+        print()
+        try:
+            cantidad = int(input("Cantidad (0 para cancelar): "))
+            if cantidad < 0:
+                raise ValueError
+            elif cantidad == 0:
+                return
+        except ValueError:
+            input("CANTIDAD INVALIDA.")
+            continue
+
+        if cantidad > catalogo[id]['stock']:
+            input("NO TENEMOS DISPONIBLE ESA CANTIDAD.")
+            continue
+        else:
+            
+            catalogo[id]['stock'] -= int(cantidad)
+
+            if any(catalogo[id]['nombre'] == p['nombre'] for p in carro):
+                for p in carro:
+                    if p['nombre'] == catalogo[id]['nombre']:
+                        p['cantidad'] += cantidad
+                        p['precio'] = catalogo[id]['precio'] * p['cantidad']  
+                        break
+                input("Compra agregada a carrito")
+                return
+            else:
+                carro.append(
+                    {
+                        "nombre": catalogo[id]['nombre'],
+                        "precio": catalogo[id]['precio'] * cantidad,
+                        "cantidad": cantidad
+                    }
+                )
+                input("Compra agregada a carrito")
+                return
+            
 def main():
     while True:
         
@@ -306,7 +352,8 @@ def main():
             if id >= len(catalogo) or catalogo[id]['stock'] == 0 or id <= 0:
                 input("ID NO VALIDO ❌⚠️")
             else:
-                carro.append(catalogo[id])
+                SeleccionProducto(id)
+                Guardarjson(catalogo)
 
 
 main()

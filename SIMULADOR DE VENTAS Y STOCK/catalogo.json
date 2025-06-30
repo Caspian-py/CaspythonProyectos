@@ -96,8 +96,8 @@
     },
     {
         "nombre": "Oreo",
-        "precio": 3,
-        "stock": 10
+        "precio": 10.0,
+        "stock": 7
     },
     {
         "nombre": "Cable usb",
