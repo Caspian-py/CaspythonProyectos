@@ -25,7 +25,7 @@ def ImportarJson():
         
 
 catalogo = ImportarJson()
-
+carro = []
 def ImportarJsonUsser():
     try:
         with open("adm.json", "r") as f:
@@ -199,9 +199,9 @@ def modificar():
 def eliminar():
     while True:
         clear()
-        print("ELIMINAR PRODUCTO".center(ancho))
+        print("🗑️ ELIMINAR PRODUCTO 🗑️".center(ancho))
         MostrarCatalogoAdm()
-        print("SELECCIONA EL ID (0 para salir)")
+        print("SELECCIONA EL ID (0 para salir) 🔢")
         
         try:
             idi = int(input("ID 🔢: "))
@@ -214,20 +214,20 @@ def eliminar():
             input("ID NO VALIDO")
             continue
         clear()
-        print("ELIMINANDO PRODUCTO...")
-        print(f"{'Nombre':>20} | {'Precio':<10} | {'stock':^5}")
+        print("🗑️ ELIMINANDO PRODUCTO...")
+        print(f"{'Nombre':<20} | {'Precio':<10} | {'stock':^5}")
         print("-" * 45)
         print(f"{catalogo[id]['nombre']:<20} | {catalogo[id]['precio']:<10} | {catalogo[id]['stock']}")
         print("-" * 45)
         codigo = ''.join(random.choices(string.ascii_letters + string.digits, k = 5))
-        print(f"CODIGO: {codigo}")
-        if input("SI ESTAS SEGURO DE ELIMINAR DIGITA EL CODIGO CORRECTAMENTE: ") == codigo:
+        print(f"CODIGO DE CONFIRMACION 🔐: {codigo}")
+        if input("INGRESA EL CODIGO EXACTAMENTE PARA CONFIRMAR ELIMINACION ✏️🔐: ") == codigo:
             catalogo.pop(id)
             Guardarjson(catalogo)
-            print("ELIMINADO CORRECTAMENTE")
+            print("PRODUCTO ELIMINADO CORRECTAMENTE ✅")
         else:
-            print("ELIMINACION CANCELADA")
-        if input("DESEAR ELIMINAR OTRO PRODUCTO? (S/N): ").lower().strip() != "s":
+            print("ELIMINACION CANCELADA 🚫")
+        if input("DESEAR ELIMINAR OTRO PRODUCTO? (S/N) ➕: ").lower().strip() != "s":
             return
 
 def MenuAdministrador():
@@ -258,6 +258,18 @@ def MenuAdministrador():
                 eliminar()
             else:
                 input("OPCION NO ENCONTRADA EN EL MENU ❌⚠️ ")
+def MostrarCarro():
+    print("CARRO DE COMPRAS".center(ancho))
+    print("-" * 60)
+    print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
+    print("-" * 60)
+
+    if len(carro) <= 0:
+        print("CARRO VACIO".center(60))
+    else:
+        for id, producto in enumerate(carro):
+            print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5}")
+    print("-" * 60)
 
 def main():
     while True:
@@ -272,6 +284,8 @@ def main():
         print("🛒 MODIFICAR CARRITO")
         print("🔐 INICIAR SESION")
         print("❌ SALIR")
+        print()
+        MostrarCarro()
         print()
         opt = input("🔎 ID u OPCION: ").strip().lower()
 
@@ -288,7 +302,11 @@ def main():
                 input("OPCION NO ENCONTRADA EN EL MENU. ❌⚠️ ")
             
         elif opt.isdigit():
-            input("Selecciona en el carrito")
+            id = int(opt) - 1
+            if id >= len(catalogo) or catalogo[id]['stock'] == 0 or id <= 0:
+                input("ID NO VALIDO ❌⚠️")
+            else:
+                carro.append(catalogo[id])
 
 
 main()

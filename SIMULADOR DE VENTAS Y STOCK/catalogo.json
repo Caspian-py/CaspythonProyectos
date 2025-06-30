@@ -30,9 +30,9 @@
         "stock": 6
     },
     {
-        "nombre": "Microfono USB",
+        "nombre": "Microfono usb",
         "precio": 130.0,
-        "stock": -1
+        "stock": 1
     },
     {
         "nombre": "Camara Web",
@@ -53,11 +53,6 @@
         "nombre": "Silla Ergon\u00c3\u00b3mica",
         "precio": 720.0,
         "stock": 0
-    },
-    {
-        "nombre": "Curso Python",
-        "precio": 199.0,
-        "stock": 1
     },
     {
         "nombre": "Curso Linux",
@@ -103,5 +98,10 @@
         "nombre": "Oreo",
         "precio": 3,
         "stock": 10
+    },
+    {
+        "nombre": "Cable usb",
+        "precio": 20.0,
+        "stock": 3
     }
 ]
