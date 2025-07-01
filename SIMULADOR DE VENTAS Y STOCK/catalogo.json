@@ -1,13 +1,13 @@
 [
     {
         "nombre": "Teclado",
-        "precio": 75.0,
-        "stock": 0
+        "precio": 70.0,
+        "stock": 7
     },
     {
         "nombre": "Monitor",
         "precio": 540.0,
-        "stock": 2
+        "stock": 1
     },
     {
         "nombre": "Laptop",
@@ -17,12 +17,12 @@
     {
         "nombre": "Disco Duro SSD",
         "precio": 240.0,
-        "stock": 7
+        "stock": 3
     },
     {
         "nombre": "Memoria RAM 8GB",
         "precio": 150.0,
-        "stock": 4
+        "stock": 1
     },
     {
         "nombre": "Auriculares",
@@ -57,7 +57,7 @@
     {
         "nombre": "Curso Linux",
         "precio": 199.0,
-        "stock": 3
+        "stock": 2
     },
     {
         "nombre": "Curso Hacking \u00c3\u2030tico",
@@ -67,7 +67,7 @@
     {
         "nombre": "Power Bank",
         "precio": 85.0,
-        "stock": 8
+        "stock": 6
     },
     {
         "nombre": "Tablet Android",
@@ -77,7 +77,7 @@
     {
         "nombre": "Soporte de Laptop",
         "precio": 45.0,
-        "stock": 10
+        "stock": 8
     },
     {
         "nombre": "Mouse Pad XL",
@@ -87,21 +87,21 @@
     {
         "nombre": "USB 64GB",
         "precio": 65.0,
-        "stock": 9
+        "stock": 7
     },
     {
         "nombre": "Pizza",
         "precio": 19.0,
-        "stock": 9
+        "stock": 2
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 7
+        "stock": 1
     },
     {
         "nombre": "Cable usb",
         "precio": 20.0,
-        "stock": 3
+        "stock": 7
     }
 ]
