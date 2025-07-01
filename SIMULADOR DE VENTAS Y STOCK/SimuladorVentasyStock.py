@@ -314,6 +314,7 @@ def SeleccionProducto(id):
                         "cantidad": cantidad
                     }
                 )
+                Guardarjson(catalogo)
                 input("Compra agregada a carrito")
                 return
 
@@ -326,9 +327,14 @@ def ModificarCarro(id):
     print(f"{carro[id]['nombre']:<20} | {carro[id]['precio']:<10} | {carro[id]['cantidad']:^5}")
     print("-" * 40)
     print()
+    for idc, producto in enumerate(catalogo):
+        if producto['nombre'] == carro[id]['nombre']:
+            idp = idc
+            break
     try:
         cantidad = int(input("Cantidad (0 para eliminar y Enter cancelar): "))
         if cantidad == 0:
+            catalogo[idp]['stock'] += carro[id]['cantidad']
             carro.pop(id)
             input("ELIMINADO")
             return
@@ -338,10 +344,7 @@ def ModificarCarro(id):
     if cantidad < 0:
         input("CANTIDAD INVALIDA ❌⚠️")
         return
-    for idc, producto in enumerate(catalogo):
-        if producto['nombre'] == carro[id]['nombre']:
-            idp = idc
-            break
+    
     if cantidad > catalogo[idp]['stock']:
         input("NO HAY SUFICIENTE STOCK")
         return
@@ -350,14 +353,10 @@ def ModificarCarro(id):
         carro[id]['precio'] = carro[id]['precio'] * cantidad
         catalogo[idp]['stock'] -= cantidad
         input("modificado correctamente.")
+    Guardarjson(catalogo)
 
-
-
+def CancelarCompra():
     
-
-
-
-
 def MenuModificar():
     while True:
         clear()
@@ -399,11 +398,15 @@ def main():
 
         if not opt.isdigit():
             if opt == "salir":
+                CancelarCompra()
                 break
             elif opt in ("caja", "pagar"):
                 input("Llevamos al usuario a la caja.")
             elif opt in ("modificar", "modificar carrito"):
-                MenuModificar()
+                if len(carro) == 0:
+                    input("CARRO VACIO NO SE PUEDE MODIFICAR.")
+                else:
+                    MenuModificar()
             elif opt in ("iniciar sesion", "iniciar"):
                 MenuAdministrador()
             else:
@@ -419,10 +422,5 @@ def main():
                 SeleccionProducto(id)
                 Guardarjson(catalogo)
 
-
 main()
         
-
-
-
-

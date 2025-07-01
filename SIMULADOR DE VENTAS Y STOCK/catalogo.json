@@ -1,8 +1,8 @@
 [
     {
         "nombre": "Teclado",
-        "precio": 70.0,
-        "stock": 7
+        "precio": 60.0,
+        "stock": 32
     },
     {
         "nombre": "Monitor",
@@ -31,8 +31,8 @@
     },
     {
         "nombre": "Microfono usb",
-        "precio": 130.0,
-        "stock": 1
+        "precio": 160.0,
+        "stock": 103
     },
     {
         "nombre": "Camara Web",
@@ -50,9 +50,9 @@
         "stock": 2
     },
     {
-        "nombre": "Silla Ergon\u00c3\u00b3mica",
+        "nombre": "Silla egonomica",
         "precio": 720.0,
-        "stock": 0
+        "stock": 67
     },
     {
         "nombre": "Curso Linux",
@@ -91,17 +91,17 @@
     },
     {
         "nombre": "Pizza",
-        "precio": 19.0,
-        "stock": 2
+        "precio": 15.0,
+        "stock": 410
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 1
+        "stock": 19
     },
     {
         "nombre": "Cable usb",
         "precio": 20.0,
-        "stock": 7
+        "stock": 3
     }
 ]
