@@ -357,6 +357,15 @@ def ModificarCarro(id):
 
 def CancelarCompra():
     
+    for p in carro:
+        for pro in catalogo:
+            if p['nombre'] == pro['nombre']:
+                pro['stock'] += p['cantidad']
+                break
+    carro.clear()
+    Guardarjson(catalogo)
+    return
+
 def MenuModificar():
     while True:
         clear()

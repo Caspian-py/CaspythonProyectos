@@ -72,7 +72,7 @@
     {
         "nombre": "Tablet Android",
         "precio": 980.0,
-        "stock": 2
+        "stock": 0
     },
     {
         "nombre": "Soporte de Laptop",
@@ -92,16 +92,16 @@
     {
         "nombre": "Pizza",
         "precio": 15.0,
-        "stock": 410
+        "stock": 390
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 19
+        "stock": 15
     },
     {
         "nombre": "Cable usb",
         "precio": 20.0,
-        "stock": 3
+        "stock": 1
     }
 ]
