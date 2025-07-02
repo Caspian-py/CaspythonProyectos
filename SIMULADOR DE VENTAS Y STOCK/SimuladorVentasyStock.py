@@ -270,6 +270,9 @@ def MostrarCarro():
         for id, producto in enumerate(carro):
             print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['cantidad']:^5}")
     print("-" * 60)
+    subtotal = sum(p['precio'] for p in carro)
+    print(f"{'SubTotal: ':<32} | {subtotal} soles")
+    print("-" * 60)
 
 def SeleccionProducto(id):
     while True:
