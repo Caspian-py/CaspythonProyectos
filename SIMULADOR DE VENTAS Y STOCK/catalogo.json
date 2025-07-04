@@ -87,17 +87,17 @@
     {
         "nombre": "USB 64GB",
         "precio": 65.0,
-        "stock": 7
+        "stock": 3
     },
     {
         "nombre": "Pizza",
         "precio": 15.0,
-        "stock": 390
+        "stock": 381
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 15
+        "stock": 4
     },
     {
         "nombre": "Cable usb",
