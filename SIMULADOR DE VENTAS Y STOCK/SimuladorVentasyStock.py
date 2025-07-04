@@ -391,6 +391,20 @@ def MenuModificar():
         else:
             ModificarCarro(id)
 
+def Caja():
+    while True:
+        clear()
+        print("BOLETA DE VENTA - CASPIAN".center(70))
+        print("-" * 70)
+        print(f"{'Cantidad':^8} | {'Producto':<25} | {'Precio U.':<10} | {'Precio T.':<10}")
+        for p in carro:
+            print(f"{p['cantidad']:^8} | {p['nombre']:<25} | {p['precioU']:<10} | {p['precioT']:10}")
+        print("-" * 70)
+        total = sum(p['precioT'] for p in carro)
+        print(f"{'Total':^49} | {'Total ' + str(total) + ' Soles' :^5}")
+        print("-" * 70)
+        input()
+
 def main():
     while True:
         
@@ -414,7 +428,10 @@ def main():
                 CancelarCompra()
                 break
             elif opt in ("caja", "pagar"):
-                input("Llevamos al usuario a la caja.")
+                if len(carro) == 0:
+                    input("NO PUEDES IR A LA CAJA CON CARRO VACIO.")
+                else:
+                    Caja()
             elif opt in ("modificar", "modificar carrito"):
                 if len(carro) == 0:
                     input("CARRO VACIO NO SE PUEDE MODIFICAR.")

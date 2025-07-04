@@ -2,7 +2,7 @@
     {
         "nombre": "Teclado",
         "precio": 60.0,
-        "stock": 32
+        "stock": 29
     },
     {
         "nombre": "Monitor",
@@ -92,12 +92,12 @@
     {
         "nombre": "Pizza",
         "precio": 15.0,
-        "stock": 381
+        "stock": 372
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 4
+        "stock": 50
     },
     {
         "nombre": "Cable usb",
