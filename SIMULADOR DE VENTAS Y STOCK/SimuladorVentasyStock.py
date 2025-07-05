@@ -398,16 +398,28 @@ def Caja():
         print("-" * 70)
         print(f"{'Cantidad':^8} | {'Producto':<25} | {'Precio U.':<10} | {'Precio T.':<10}")
         for p in carro:
-            print(f"{p['cantidad']:^8} | {p['nombre']:<25} | {p['precioU']:<10} | {p['precioT']:10}")
+            print(f"{p['cantidad']:^8} | {p['nombre']:<25} | {p['precioU']:<10} | {p['precioT']:<10}")
         print("-" * 70)
         total = sum(p['precioT'] for p in carro)
-        print(f"{'Total':^49} | {'Total ' + str(total) + ' Soles' :^5}")
+        print(f"{'Total':^49} | {str(total) + ' Soles' :^5}")
+        print(f"{'IGV (18%)':^49} | {round((total * 0.18), 2):^5}")
+        print(f"{'Total':^49} | {round((total * 1.18), 2):^5}")
         print("-" * 70)
-        input()
+        Gclave = ''.join(random.choices(string.ascii_letters + string.digits, k = 5))
+        print(f"CLAVE DE CONFIRMACIONDE PAGO ({Gclave})")
+        clave = input("Clave: ").strip()
+        if clave == "cancelar":
+            input("LA COMPRA SE CANCELO.")
+            return False
+        elif clave == Gclave:
+            input("GRACIAS POR TU COMPRA.")
+            Guardarjson(catalogo)
+            return True
+        else:
+            input("CLAVE INCORRECTA")    
 
 def main():
     while True:
-        
         clear()
         print("🛍️ SIMULADOR DE VENTAS - CASPIAN 🛍️".center(ancho))
         print()
@@ -431,7 +443,10 @@ def main():
                 if len(carro) == 0:
                     input("NO PUEDES IR A LA CAJA CON CARRO VACIO.")
                 else:
-                    Caja()
+                    if Caja():
+                        break
+                    else:
+                        continue
             elif opt in ("modificar", "modificar carrito"):
                 if len(carro) == 0:
                     input("CARRO VACIO NO SE PUEDE MODIFICAR.")
@@ -452,4 +467,3 @@ def main():
                 Guardarjson(catalogo)
 
 main()
-        

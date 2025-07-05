@@ -37,7 +37,7 @@
     {
         "nombre": "Camara Web",
         "precio": 110.0,
-        "stock": 3
+        "stock": 2
     },
     {
         "nombre": "Cable HDMI",
@@ -47,7 +47,7 @@
     {
         "nombre": "Router Wi-Fi",
         "precio": 160.0,
-        "stock": 2
+        "stock": 1
     },
     {
         "nombre": "Silla egonomica",
@@ -92,12 +92,12 @@
     {
         "nombre": "Pizza",
         "precio": 15.0,
-        "stock": 372
+        "stock": 366
     },
     {
         "nombre": "Oreo",
         "precio": 10.0,
-        "stock": 50
+        "stock": 41
     },
     {
         "nombre": "Cable usb",
