@@ -103,5 +103,10 @@
         "nombre": "Cable usb",
         "precio": 20.0,
         "stock": 1
+    },
+    {
+        "nombre": "Leche",
+        "precio": 5.0,
+        "stock": -5
     }
 ]

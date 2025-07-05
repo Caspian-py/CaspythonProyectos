@@ -35,8 +35,6 @@ def ImportarJsonUsser():
         return [{"usuario": "caspian", "codigo": 12345}]
     
 adm = ImportarJsonUsser()
-    
-
 
 def Guardarjson(catalogo):
     try:
@@ -64,28 +62,18 @@ def Login():
         input("CREDENCIALES INVALIDAS ❌⚠️ ")
         return False
 
-def MostrarCatalogoMenu():
+def MostrarCatalogo(adm):
     print("📦 CATALOGO DISPONIBLE 📦".center(ancho))
     print("-" * 60)
     print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
     print("-" * 60)
     
     for id, producto in enumerate(catalogo):
-        if producto['stock'] > 0:
+        if adm:
             print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5} U")
-    if len(catalogo) <= 0:
-        print("❌ CATALOGO VACIO ❌".center(30))
-    print("-" * 60)
-
-def MostrarCatalogoAdm():
-    
-    print("📦 CATALOGO COMPLETO 📦".center(ancho))
-    print("-" * 60)
-    print(f"{'ID':^4} | {'Nombre':<25} | {'Precio':<10} | {'Stock':^5}")
-    print("-" * 60)
-    
-    for id, producto in enumerate(catalogo):
-        print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5} U")
+        else:
+            if producto['stock'] > 0:
+                print(f"{id + 1:^4} | {producto['nombre']:<25} | {producto['precio']:<10} | {producto['stock']:^5} U")
     if len(catalogo) <= 0:
         print("❌ CATALOGO VACIO ❌".center(30))
     print("-" * 60)
@@ -141,7 +129,7 @@ def modificar():
         clear()
         print("✏️ MODIFICAR PRODUCTO ✏️".center(ancho))
         print()
-        MostrarCatalogoAdm()
+        MostrarCatalogo(True)
         print("🔢 SELECCIONA EL ID (0 para salir):")
         try:
             idi = int(input("ID 🔢: "))
@@ -200,7 +188,7 @@ def eliminar():
     while True:
         clear()
         print("🗑️ ELIMINAR PRODUCTO 🗑️".center(ancho))
-        MostrarCatalogoAdm()
+        MostrarCatalogo(True)
         print("SELECCIONA EL ID (0 para salir) 🔢")
         
         try:
@@ -238,7 +226,7 @@ def MenuAdministrador():
             clear()
             print("✅ BIENVENIDO AL ENTORNO ADMIN ✅".center(ancho))
             print()
-            MostrarCatalogoAdm()
+            MostrarCatalogo(True)
             print("📋 MENU OPCIONES: ")
             print()
             print("➕ AGREGAR: ")
@@ -349,7 +337,7 @@ def ModificarCarro(id):
         input("CANTIDAD INVALIDA ❌⚠️")
         return
     
-    if cantidad > catalogo[idp]['stock']:
+    if cantidad > catalogo[idp]['stock'] + carro[id]['cantidad']:
         input("NO HAY SUFICIENTE STOCK")
         return
     else:
@@ -423,7 +411,7 @@ def main():
         clear()
         print("🛍️ SIMULADOR DE VENTAS - CASPIAN 🛍️".center(ancho))
         print()
-        MostrarCatalogoMenu()
+        MostrarCatalogo(False)
         print("📋 MENU OPCION:")
         print()
         print("🧾 CAJA")
@@ -465,5 +453,8 @@ def main():
             else:
                 SeleccionProducto(id)
                 Guardarjson(catalogo)
+try:
+    main()
+except KeyboardInterrupt:
+    Guardarjson(catalogo)
 
-main()
