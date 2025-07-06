@@ -1,8 +1,8 @@
 [
     {
-        "nombre": "Teclado",
-        "precio": 60.0,
-        "stock": 29
+        "nombre": "Keyboard",
+        "precio": 50.0,
+        "stock": 50
     },
     {
         "nombre": "Monitor",
@@ -42,12 +42,7 @@
     {
         "nombre": "Cable HDMI",
         "precio": 35.0,
-        "stock": 12
-    },
-    {
-        "nombre": "Router Wi-Fi",
-        "precio": 160.0,
-        "stock": 1
+        "stock": 8
     },
     {
         "nombre": "Silla egonomica",
@@ -92,7 +87,7 @@
     {
         "nombre": "Pizza",
         "precio": 15.0,
-        "stock": 366
+        "stock": 266
     },
     {
         "nombre": "Oreo",
@@ -107,6 +102,11 @@
     {
         "nombre": "Leche",
         "precio": 5.0,
-        "stock": -5
+        "stock": 76
+    },
+    {
+        "nombre": "Tarjeta grafica",
+        "precio": 890.0,
+        "stock": 5
     }
 ]
