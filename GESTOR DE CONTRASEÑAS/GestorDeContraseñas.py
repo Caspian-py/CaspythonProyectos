@@ -8,10 +8,19 @@
 import hashlib, os, json
 from getpass import getpass
 
-usuarios = []
+
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
+
+def import_usuarios():
+    try:
+        with open('usuarios.json', 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    
+usuarios = import_usuarios()
 
 def guardar_usuarios(usuarios):
     try:
@@ -38,7 +47,7 @@ def registrar():
         passw = getpass("CLAVE MAESTRA: ").strip()
         if not passw == "":
             if len(passw) < 6:
-                input("La contrasenia es muy insegura, maximo 6 digitos")
+                input("La contrasenia es muy insegura, maximo 6 digitos ")
                 continue
             else:
                 validacion = True
@@ -53,16 +62,34 @@ def registrar():
                 }
             )
             if guardar_usuarios(usuarios):
-                input("USUARIO REGISTRADO CORRECTAMENTE")
+                input("USUARIO REGISTRADO CORRECTAMENTE ")
                 return
             else:
-                input("ERROR AL REGISTRAR NUEVO USUARIO")
+                input("ERROR AL REGISTRAR NUEVO USUARIO ")
         if input("CONTINUAR? (s/n): ").lower().strip() == "n":
             return
         
+def iniciar_sesion():
+    while True:
+        clear()
+        print("INICIAR SESION")
+        print()
+        usuario = input("NOMBRE DE USUARIO: ").lower().strip()
+        passw = getpass("CLAVE MAESTRA: ").strip()
+        clave_maestra = hashlib.sha256(passw.encode()).hexdigest()
+        for id, u in enumerate(usuarios):
+            if usuario == u['usuario'] and clave_maestra == u['claveM']:
+                main_usuario(id)
+                return
         
-
-
+        input("CREDENCIALES NO REGISTRADAS")
+        if input("SALIR (s/n): ").lower().strip() == "s":
+            return
+def main_usuario(id):
+    clear()
+    print(f"BIENVENIDO {usuarios[id]['usuario'].upper()}")
+    input()
+    return
 
 def main():
     while True:
@@ -75,7 +102,7 @@ def main():
         opt = input("Ingresa tu opcion: ").strip().lower()
 
         if opt in ("iniciar sesion", "iniciar"):
-            input("def iniciar_sesion() ")
+            iniciar_sesion()
         elif opt in ("registrarse", "registrarme", "registrar"):
             registrar()
         elif opt in ("salir", ""):
