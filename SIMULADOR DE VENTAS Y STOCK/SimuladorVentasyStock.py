@@ -46,7 +46,7 @@ def Guardarjson(catalogo):
 
 def Login():
     clear()
-    print("🔐 LOGIN 🔐".center(ancho))
+    print("🔐 INICIAR SESIÓN 🔐".center(ancho))
     print()
     try:
         print("USUARIO 👤: ")
@@ -87,7 +87,7 @@ def agregar():
         print()
         nombre = input("🏷️  Nombre Producto: ").strip().lower()
         if len(nombre) < 4:
-            input("NOMBRE DEMASIADO CORTO ❌⚠️")
+            input("NOMBRE DEMASIADO CORTO ❌⚠️ ")
             continue
         elif nombre.lower() == "cancelar":
             return
@@ -96,18 +96,18 @@ def agregar():
             if precio <= 0:
                 raise ValueError
         except ValueError:
-            input("PRECIO INVALIDO ❌⚠️")
+            input("PRECIO INVALIDO ❌⚠️ ")
             continue
         try:
             stock = int(input("Stock 🔢: "))
             if stock < 0:
                 raise ValueError
         except ValueError:
-            input("STOCK INVALIDO ❌⚠️")
+            input("STOCK INVALIDO ❌⚠️ ")
             continue
         
         if any(nombre == p['nombre'].lower() for p in catalogo):
-            input("EL PRODUCTO YA ESTA REGISTRADO ❌⚠️")
+            input("EL PRODUCTO YA ESTA REGISTRADO ❌⚠️ ")
             continue
         else:
             catalogo.append(
@@ -118,9 +118,9 @@ def agregar():
                 }
             )
             if Guardarjson(catalogo):
-                input("AGREGADO CORRECTAMENTE ✅")
+                input("AGREGADO CORRECTAMENTE ✅ ")
             else:
-                input("ERROR AL AGREGAR EL PROPUCTO ❌⚠️")
+                input("ERROR AL AGREGAR EL PROPUCTO ❌⚠️ ")
         if input("➕ DESEAR AGREGAR OTRO? S/N: ").strip().lower() != "s":
             return  
               
@@ -137,10 +137,10 @@ def modificar():
                 return
             id = idi - 1
         except ValueError:
-            input("ID NO VALIDO ❌⚠️")
+            input("ID NO VALIDO ❌⚠️ ")
             continue
         if id >= len(catalogo) or id < 0:
-            input("ID NO ENCONTRADO ❌⚠️")
+            input("ID NO ENCONTRADO ❌⚠️ ")
             continue
         else:
             
@@ -341,9 +341,10 @@ def ModificarCarro(id):
         input("NO HAY SUFICIENTE STOCK")
         return
     else:
+        stockT = catalogo[idp]['stock'] + carro[id]['cantidad']
         carro[id]['cantidad'] = cantidad
         carro[id]['precioT'] = carro[id]['precioU'] * cantidad
-        catalogo[idp]['stock'] -= cantidad
+        catalogo[idp]['stock'] = stockT - cantidad
         input("modificado correctamente.")
     Guardarjson(catalogo)
 
