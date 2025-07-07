@@ -7,6 +7,8 @@
 
 import hashlib, os, json
 from getpass import getpass
+from cryptography.fernet import Fernet
+
 
 centro = os.get_terminal_size().columns
 
@@ -42,7 +44,6 @@ def import_pwd(ussid):
         list_claveM = []
 
 def guardar_pwd(ussid):
-    input(usuarios[ussid])
     try:
         clave = str(usuarios[ussid]['claveM'])
 
@@ -54,7 +55,7 @@ def guardar_pwd(ussid):
 def registrar():
     while True:
         clear()
-        print("📝 REGISTRAR NUEVO USUARIO 📝").center(centro)
+        print("📝 REGISTRAR NUEVO USUARIO 📝".center(centro))
         print()
         validacion = False
         print("👤 USUARIO:")
@@ -76,10 +77,13 @@ def registrar():
         print()
         if validacion:
             clave_maestra = hashlib.sha256(passw.encode()).hexdigest()
+            key = Fernet.generate_key().decode()
+
             usuarios.append(
                 {
                     "usuario": nombre,
-                    "claveM": clave_maestra
+                    "claveM": clave_maestra,
+                    "key": key
                 }
             )
             if guardar_usuarios(usuarios):
@@ -97,7 +101,7 @@ def iniciar_sesion():
         print()
         print("👤 NOMBRE DE USUARIO:")
         usuario = input(">>> ").lower().strip()
-        print("CLAVE MAESTRA:")
+        print("🔑 CLAVE MAESTRA:")
         password = getpass(">>> ").strip()
         clave_maestra = hashlib.sha256(password.encode()).hexdigest()
         for id, u in enumerate(usuarios):
@@ -107,45 +111,83 @@ def iniciar_sesion():
                 main_usuario(ussid)
                 return
         
-        print("CREDENCIALES NO REGISTRADAS")
+        print("❌ CREDENCIALES NO REGISTRADAS")
         if input("SALIR (s/n): ").lower().strip() == "s":
             return
 
 def main_usuario(ussid):
-    clear()
-    print(f"BIENVENIDO {usuarios[ussid]['usuario'].upper()}")
-    mostrar_list_pwd(ussid)
-    print()
-    print("NUEVO")
-    print("MODIFICAR")
-    print("ELIMINAR")
-    print()
-    print("CERRAR SESION")
-    opt = input().strip().lower()
-    if opt in ("nuevo", "new", "agregar"):
-        agregar_new_pwd(ussid)
+    while True:
+        clear()
+        print(f"👋 BIENVENIDO {usuarios[ussid]['usuario'].upper()} 👋")
+        mostrar_list_pwd(ussid)
+        print("-" * 40)
+        print("➕ NUEVO")
+        print("✏️ MODIFICAR")
+        print("🗑️ ELIMINAR")
+        print()
+        print("🔓 CERRAR SESION")
+        print("-" * 40 )
+        opt = input("📌 ").strip().lower()
+        if opt in ("nuevo", "new", "agregar"):
+            agregar_new_pwd(ussid)
+        elif opt in ("cerrar", "cerrar sesion"):
+            return
 
 def mostrar_list_pwd(ussid):
-    print("LISTA DE CONTRASEÑAS GUARDADAS")
+    print("-" * 40 )
+    print("🔐 LISTA DE CONTRASEÑAS GUARDADAS 🔐")
+    print("-" * 40 )
     if len(list_claveM) == 0:
-        print("AUN NO TIENES GUARDADA NINGUNA CONTRASEÑA")
+        print("⚠️ AUN NO TIENES CONTRASEÑAS GUARDADAS")
+
     else:
         print(list_claveM)
+    print("-" * 30 )        
 
 def agregar_new_pwd(ussid):
-    service = input("SERVICIO: ").strip().lower()
-    usser = input("USUARIO: ").strip()
-    pwd = getpass("CONTRASEÑA: ").strip()
+    while True:
+        clear()
+        print("REGISTRANDO CONTRASEÑA PARA GUARDAR".center(centro))
+        print("PARA CANCELAR INGRESE 'cancenlar' EN SERVICIO")
+        
+        print("SERVICIO:")
+        service = input(">>> ").strip().lower()
+        if service == "cancelar" or service == "":
+            return
+        
+        print("USUARIO: ")
+        usser = input(">>> ").strip()
+        if usser == "":
+            input("NOMBRE DE USUARIOS INVALIDO")
+            continue
+        
+        print("CONTRASEÑA:")
+        pwd = getpass(">>> ").strip()
+        print("REPITE UNA VEZ MAS:")
+        if getpass(">>> ").strip() != pwd:
+            input("CONTRASEÑAS DIFERENTES, POR FAVOR VUELVE A INTENTARLO DE NUEVO.")
+            continue
 
-    list_claveM.append(
-        {
-            'service': service,
-            'usser': usser,
-            'pwd': pwd
-        }
-    )
-    guardar_pwd(ussid)
-    input("AGREGADO CORRECCTAMENTE")
+        fernet = Fernet(usuarios[ussid]['key'].encode())
+        pwdC = fernet.encrypt(pwd.encode())
+
+        pwdH = hashlib.sha256(pwd.encode()).hexdigest()
+
+        if any(usser == u['usser'] and pwdH == u['pwdH'] for u in list_claveM):
+            input("USUARIO Y CONTRASEÑA YA ESTAN REGISTRADAS.")
+            continue
+        else:
+            list_claveM.append(
+                {
+                    'service': service,
+                    'usser': usser,
+                    'pwdC': pwdC.decode(),
+                    'pwdH': pwdH
+                }
+            )
+            guardar_pwd(ussid)
+            input("AGREGADO CORRECCTAMENTE")
+            return
 
 
 
