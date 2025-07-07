@@ -120,16 +120,19 @@ def main_usuario(ussid):
         clear()
         print(f"👋 BIENVENIDO {usuarios[ussid]['usuario'].upper()} 👋")
         mostrar_list_pwd(ussid)
-        print("-" * 40)
+        print()
         print("➕ NUEVO")
         print("✏️ MODIFICAR")
         print("🗑️ ELIMINAR")
+        print("👀 VER CONTRASEÑA")
         print()
         print("🔓 CERRAR SESION")
         print("-" * 40 )
-        opt = input("📌 ").strip().lower()
+        opt = input("📌 OPCION: ").strip().lower()
         if opt in ("nuevo", "new", "agregar"):
             agregar_new_pwd(ussid)
+        elif opt in ("modificar", "actualizar"):
+            main_modificar_pwd(ussid)
         elif opt in ("cerrar", "cerrar sesion"):
             return
 
@@ -141,8 +144,11 @@ def mostrar_list_pwd(ussid):
         print("⚠️ AUN NO TIENES CONTRASEÑAS GUARDADAS")
 
     else:
-        print(list_claveM)
-    print("-" * 30 )        
+        print(f"{'ID':^4} | {'SERVICIO':^5}")
+        print("-" * 40)
+        for id, f in enumerate(list_claveM):
+            print(f"{(id + 1):^4} | {f['service']:^5}")
+            print("-" * 40)
 
 def agregar_new_pwd(ussid):
     while True:
@@ -188,13 +194,39 @@ def agregar_new_pwd(ussid):
             guardar_pwd(ussid)
             input("AGREGADO CORRECCTAMENTE")
             return
+        
+def modificar_pwd(ussid, idm):
+    while True:
+        print(usuarios[ussid])
+        print(list_claveM[idm])
+        input()
+
+def main_modificar_pwd(ussid):
+    while True:
+        clear()
+        print("MODIFICAR CONTRASEÑA")
+        mostrar_list_pwd(ussid)
+        print("dIGITA EL ID A MODIFICAR (0) para salir):")
+        try:
+            id = int(input(">>> ").strip())
+            if id in (0, ""):
+                return
+            idm = id - 1
+            if id < 0 or id > len(list_claveM):
+                raise ValueError
+        except ValueError:
+            input("ID NO VALIDO ")
+            continue
+        modificar_pwd(ussid, idm)
+        return
+    
+
 
 
 
 def main():
     while True:
         clear()
-        print(usuarios)
         print("-" * 30)
         print("🔐 INICIAR SESION")
         print("📝 REGISTRARSE")
