@@ -29,7 +29,7 @@ def guardar_usuarios(usuarios):
             return True
     except (PermissionError, OSError):
         return False
-    
+
 def registrar():
     while True:
         clear()
@@ -85,11 +85,70 @@ def iniciar_sesion():
         input("CREDENCIALES NO REGISTRADAS")
         if input("SALIR (s/n): ").lower().strip() == "s":
             return
-def main_usuario(id):
+def import_pwd(uss):
+    input(usuarios[uss])
+    try:
+        clave = str(usuarios[uss]['claveM'])
+        
+        with open(f'{clave}.json', 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    
+list_claveM = import_pwd()
+
+def guardar_pwd(uss):
+    input(usuarios[uss])
+    try:
+        clave = str(usuarios[uss]['claveM'])
+
+        with open(f'{clave}.json', 'w') as f:
+            json.dump(list_claveM, f, indent=4)
+    except (PermissionError, OSError):
+        input("ERROR AL GUARDAR LAS CONTRASEÑAS ")
+        
+
+
+def main_usuario(uss):
+    input(usuarios[uss])
     clear()
-    print(f"BIENVENIDO {usuarios[id]['usuario'].upper()}")
-    input()
-    return
+    print(f"BIENVENIDO {usuarios[uss]['usuario'].upper()}")
+    mostrar_list_pwd(uss)
+    print()
+    print("NUEVO")
+    print("MODIFICAR")
+    print("ELIMINAR")
+    print()
+    print("SALIR")
+    opt = input().strip().lower()
+    if opt in ("nuevo", "new", "agregar"):
+        agregar_new_pwd(uss)
+
+def mostrar_list_pwd(uss):
+    input(usuarios[uss])
+    print("LISTA DE CONTRASEÑAS GUARDADAS")
+    if len(list_claveM) == 0:
+        print("AUN NO TIENES GUARDADA NINGUNA CONTRASEÑA")
+    else:
+        print(list_claveM)
+
+def agregar_new_pwd(uss):
+    input(usuarios[uss])
+    service = input("SERVICIO: ").strip().lower()
+    usser = input("USUARIO: ").strip()
+    pwd = getpass("CONTRASEÑA: ").strip()
+
+    list_claveM.append(
+        {
+            'service': service,
+            'usser': usser,
+            'pwd': pwd
+        }
+    )
+    guardar_pwd(uss)
+    input("AGREGADO CORRECCTAMENTE")
+
+
 
 def main():
     while True:
