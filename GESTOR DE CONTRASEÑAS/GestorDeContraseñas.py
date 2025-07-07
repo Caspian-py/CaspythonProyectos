@@ -8,6 +8,8 @@
 import hashlib, os, json
 from getpass import getpass
 
+centro = os.get_terminal_size().columns
+
 
 
 def clear():
@@ -30,28 +32,47 @@ def guardar_usuarios(usuarios):
     except (PermissionError, OSError):
         return False
 
+def import_pwd(ussid):
+    global list_claveM
+    try:
+        clave = str(usuarios[ussid]['claveM'])
+        with open(f'{clave}.json', 'r') as f:
+            list_claveM = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        list_claveM = []
+
+def guardar_pwd(ussid):
+    input(usuarios[ussid])
+    try:
+        clave = str(usuarios[ussid]['claveM'])
+
+        with open(f'{clave}.json', 'w') as f:
+            json.dump(list_claveM, f, indent=4)
+    except (PermissionError, OSError):
+        input("ERROR AL GUARDAR LAS CONTRASEÑAS ")
+
 def registrar():
     while True:
         clear()
-        print("REGISTRAR NUEVO USUARIO")
+        print("📝 REGISTRAR NUEVO USUARIO 📝").center(centro)
         print()
         validacion = False
-        nombre = input("USUARIO: ").strip().lower()
+        print("👤 USUARIO:")
+        nombre = input(">>> ").strip().lower()
         if not nombre == "":
             if len(nombre) < 4:
-                input("El nombre es muy corto. ")
+                input("⚠️ EL NOMBRE ES MUY CORTO ")
                 continue
             else:
                 validacion = True
-
-        passw = getpass("CLAVE MAESTRA: ").strip()
+        print("🔑 CLAVE MAESTRA:")
+        passw = getpass(">>> ").strip()
         if not passw == "":
             if len(passw) < 6:
-                input("La contrasenia es muy insegura, maximo 6 digitos ")
+                input("⚠️ MINIMO 6 CARACTERES ")
                 continue
             else:
                 validacion = True
-
         print()
         if validacion:
             clave_maestra = hashlib.sha256(passw.encode()).hexdigest()
@@ -62,78 +83,56 @@ def registrar():
                 }
             )
             if guardar_usuarios(usuarios):
-                input("USUARIO REGISTRADO CORRECTAMENTE ")
+                input("✅ USUARIO REGISTRADO CORRECTAMENTE ")
                 return
             else:
-                input("ERROR AL REGISTRAR NUEVO USUARIO ")
-        if input("CONTINUAR? (s/n): ").lower().strip() == "n":
+                input("❌ ERROR AL REGISTRAR NUEVO USUARIO ")
+        if input("🔁 CONTINUAR? (s/n): ").lower().strip() == "n":
             return
         
 def iniciar_sesion():
     while True:
         clear()
-        print("INICIAR SESION")
+        print("🔐 INICIAR SESION 🔐".center(centro))
         print()
-        usuario = input("NOMBRE DE USUARIO: ").lower().strip()
-        passw = getpass("CLAVE MAESTRA: ").strip()
-        clave_maestra = hashlib.sha256(passw.encode()).hexdigest()
+        print("👤 NOMBRE DE USUARIO:")
+        usuario = input(">>> ").lower().strip()
+        print("CLAVE MAESTRA:")
+        password = getpass(">>> ").strip()
+        clave_maestra = hashlib.sha256(password.encode()).hexdigest()
         for id, u in enumerate(usuarios):
             if usuario == u['usuario'] and clave_maestra == u['claveM']:
-                main_usuario(id)
+                ussid = id
+                import_pwd(ussid)
+                main_usuario(ussid)
                 return
         
-        input("CREDENCIALES NO REGISTRADAS")
+        print("CREDENCIALES NO REGISTRADAS")
         if input("SALIR (s/n): ").lower().strip() == "s":
             return
-def import_pwd(uss):
-    input(usuarios[uss])
-    try:
-        clave = str(usuarios[uss]['claveM'])
-        
-        with open(f'{clave}.json', 'r') as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-    
-list_claveM = import_pwd()
 
-def guardar_pwd(uss):
-    input(usuarios[uss])
-    try:
-        clave = str(usuarios[uss]['claveM'])
-
-        with open(f'{clave}.json', 'w') as f:
-            json.dump(list_claveM, f, indent=4)
-    except (PermissionError, OSError):
-        input("ERROR AL GUARDAR LAS CONTRASEÑAS ")
-        
-
-
-def main_usuario(uss):
-    input(usuarios[uss])
+def main_usuario(ussid):
     clear()
-    print(f"BIENVENIDO {usuarios[uss]['usuario'].upper()}")
-    mostrar_list_pwd(uss)
+    print(f"BIENVENIDO {usuarios[ussid]['usuario'].upper()}")
+    mostrar_list_pwd(ussid)
     print()
     print("NUEVO")
     print("MODIFICAR")
     print("ELIMINAR")
     print()
-    print("SALIR")
+    print("CERRAR SESION")
     opt = input().strip().lower()
     if opt in ("nuevo", "new", "agregar"):
-        agregar_new_pwd(uss)
+        agregar_new_pwd(ussid)
 
-def mostrar_list_pwd(uss):
-    input(usuarios[uss])
+def mostrar_list_pwd(ussid):
     print("LISTA DE CONTRASEÑAS GUARDADAS")
     if len(list_claveM) == 0:
         print("AUN NO TIENES GUARDADA NINGUNA CONTRASEÑA")
     else:
         print(list_claveM)
 
-def agregar_new_pwd(uss):
-    input(usuarios[uss])
+def agregar_new_pwd(ussid):
     service = input("SERVICIO: ").strip().lower()
     usser = input("USUARIO: ").strip()
     pwd = getpass("CONTRASEÑA: ").strip()
@@ -145,7 +144,7 @@ def agregar_new_pwd(uss):
             'pwd': pwd
         }
     )
-    guardar_pwd(uss)
+    guardar_pwd(ussid)
     input("AGREGADO CORRECCTAMENTE")
 
 
@@ -154,11 +153,12 @@ def main():
     while True:
         clear()
         print(usuarios)
-        print("INICIAR SESION")
-        print("REGISTRARSE")
-        print("SALIR")
-        
-        opt = input("Ingresa tu opcion: ").strip().lower()
+        print("-" * 30)
+        print("🔐 INICIAR SESION")
+        print("📝 REGISTRARSE")
+        print("❌ SALIR")
+        print("-" * 30)
+        opt = input(">>> ").strip().lower()
 
         if opt in ("iniciar sesion", "iniciar"):
             iniciar_sesion()
@@ -167,7 +167,7 @@ def main():
         elif opt in ("salir", ""):
             break
         else:
-            input("Opcion no valida. ")
+            input("⚠️ OPCION NO VALIDA")
 main()
 
 
