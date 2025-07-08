@@ -157,7 +157,7 @@ def agregar_new_pwd(ussid):
         print("PARA CANCELAR INGRESE 'cancenlar' EN SERVICIO")
         
         print("SERVICIO:")
-        service = input(">>> ").strip().lower()
+        service = input(">>> ").strip()
         if service == "cancelar" or service == "":
             return
         
@@ -185,7 +185,7 @@ def agregar_new_pwd(ussid):
         else:
             list_claveM.append(
                 {
-                    'service': service,
+                    'service': service.upper(),
                     'usser': usser,
                     'pwdC': pwdC.decode(),
                     'pwdH': pwdH
@@ -197,10 +197,45 @@ def agregar_new_pwd(ussid):
         
 def modificar_pwd(ussid, idm):
     while True:
-        print(usuarios[ussid])
-        print(list_claveM[idm])
-        input()
+        clear()
+        print("MODIFICANDO")
+        print("ingresa cancelar o enter para salir")
 
+        print("SERVICIO: ")
+        service = input(">>> ").strip()
+        if service == "cancelar" or service ==  "":
+            return
+        
+        print("USUARIO NUEVO:")
+        usser = input(">>> ").strip()
+        if usser == "":
+            input("NOMBRE DE USUARIO INVALIDO")
+            continue
+
+        print("CONTRASEÑA NUEVA:")
+        pwd = getpass(">>> ").strip()
+        print("REPITE UNA VEZ MAS: ")
+        if getpass(">>> ").strip() != pwd:
+            input("CONTRASEÑAS DIFERENTES, POR FAVOR VUELVE A INTENTARLO DE NUEVO. ")
+            continue
+        fernet = Fernet(usuarios[ussid]['key'].encode())
+        pwdC = fernet.encrypt(pwd.encode())
+
+        pwdH = hashlib.sha256(pwd.encode()).hexdigest()
+
+        if any(usser == u['usser'] and pwdH == u['pwdH'] for u in list_claveM):
+            input("USUARIO Y CONTRASEÑA YA ESTAN REGISTRADOS.")
+            continue
+        else:
+            list_claveM[idm]['service'] = service.capitalize()
+            list_claveM[idm]['usser'] = usser
+            list_claveM[idm]['pwdC'] = pwdC.decode()
+            list_claveM[idm]['pwdH'] = pwdH
+
+            guardar_pwd(ussid)
+            input("MODIFICADO CORRECTAMENTE.")
+            return
+        
 def main_modificar_pwd(ussid):
     while True:
         clear()
@@ -218,7 +253,8 @@ def main_modificar_pwd(ussid):
             input("ID NO VALIDO ")
             continue
         modificar_pwd(ussid, idm)
-        return
+        if input("DESEAS MODIFICAR MAS? (s/n): ").strip() == "n":
+            return
     
 
 
