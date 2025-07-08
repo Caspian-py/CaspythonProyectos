@@ -133,6 +133,8 @@ def main_usuario(ussid):
             agregar_new_pwd(ussid)
         elif opt in ("modificar", "actualizar"):
             main_modificar_pwd(ussid)
+        elif opt in ("eliminar", "borrar", "delete"):
+            main_eliminar_pwd(ussid)
         elif opt in ("cerrar", "cerrar sesion"):
             return
 
@@ -227,36 +229,76 @@ def modificar_pwd(ussid, idm):
             input("USUARIO Y CONTRASEÑA YA ESTAN REGISTRADOS.")
             continue
         else:
-            list_claveM[idm]['service'] = service.capitalize()
-            list_claveM[idm]['usser'] = usser
-            list_claveM[idm]['pwdC'] = pwdC.decode()
-            list_claveM[idm]['pwdH'] = pwdH
-
-            guardar_pwd(ussid)
-            input("MODIFICADO CORRECTAMENTE.")
-            return
+            print("DIGITA LA CLAVE MAESTRA PARA GUARDAR LOS CAMBIOS (solo 1 intento): ")
+            clave = getpass(">>> ").strip()
+            claveM = hashlib.sha256(clave.encode()).hexdigest()
+            if claveM == usuarios[ussid]['claveM']:
+                list_claveM[idm]['service'] = service.capitalize()
+                list_claveM[idm]['usser'] = usser
+                list_claveM[idm]['pwdC'] = pwdC.decode()
+                list_claveM[idm]['pwdH'] = pwdH
+                guardar_pwd(ussid)
+                input("MODIFICADO CORRECTAMENTE.")
+                return
+            else:
+                input("CLAVE MAESTRA ICNORRECTA.")
+                return
         
 def main_modificar_pwd(ussid):
     while True:
         clear()
-        print("MODIFICAR CONTRASEÑA")
+        print("MODIFICAR CONTRASEÑA".center(centro))
         mostrar_list_pwd(ussid)
-        print("dIGITA EL ID A MODIFICAR (0) para salir):")
+        print("DIGITA EL ID A MODIFICAR (0 para salir):")
         try:
             id = int(input(">>> ").strip())
             if id in (0, ""):
                 return
-            idm = id - 1
             if id < 0 or id > len(list_claveM):
                 raise ValueError
         except ValueError:
             input("ID NO VALIDO ")
             continue
+        idm = id - 1
         modificar_pwd(ussid, idm)
         if input("DESEAS MODIFICAR MAS? (s/n): ").strip() == "n":
             return
-    
+        
+def eliminar_pwd(ussid, ide):
+    while True:
+        clear()
+        print("ELIMINANDO: ")
+        print("INGRESA LA CLAVE MAESTRA PARA ELIMINAR (solo 1 intento): ")
+        clave = getpass(">>> ").strip()
+        claveM = hashlib.sha256(clave.encode()).hexdigest()
+        if claveM == usuarios[ussid]['claveM']:
+            list_claveM.pop(ide)
+            guardar_pwd(ussid)
+            input("ELIMINADO CORRECTAMENTE")
+            return
+        else:
+            input("CLAVE MAESTRA INCORRECTA")
+            return
 
+def main_eliminar_pwd(ussid):
+    while True:
+        clear()
+        print("ELIMINAR CONTRASEÑA".center(centro))
+        mostrar_list_pwd(ussid)
+        print("DIGITA EL ID A ELIMINAR (O para salir): ")
+        try:
+            id = int(input(">>> ").strip())
+            if id in (0, ""):
+                return
+            if id < 0 or id > len(list_claveM):
+                raise ValueError
+        except ValueError:
+            input("ID NO VLAIDO")
+            continue
+        ide = id - 1
+        eliminar_pwd(ussid, ide)
+        if input("DESEAS ELIMINAR MAS? (s/n): ").strip() == "n":
+            return
 
 
 

@@ -1,14 +1,8 @@
 [
     {
-        "service": "facebook",
-        "usser": "caspian",
-        "pwdC": "gAAAAABobE2gyVKYRoyNSza6IbwQNztrQlS7bl37tuwxGP8GaUkB0dEVxTm7G3kukFG1Npy66oyNfYX25Uocpyo93mRqlzPqnQ==",
-        "pwdH": "6cb671e961202103c147115d3df7e6cdb437c93b17f1ebc87a74b2797f260642"
-    },
-    {
-        "service": "Github",
-        "usser": "caspian",
-        "pwdC": "gAAAAABobH8sLKloLC_dizqqNngRHje8DCXLg-c0M5fkhs_mtsLYkzWM44dGzHyxrn0kJ2bFIwOyeaVfnPSsfRoF_Om73UdXBg==",
-        "pwdH": "d9b05c04bad5c9f99a983629ceb08b2960a825c6ac1c6012ad4be955acc410e7"
+        "service": "TELEGRAM",
+        "usser": "caspian69",
+        "pwdC": "gAAAAABobIiM511r8sWkJeeVUleQN22KGVNzGmi9vjrr8gUtFlFez_GqtGHK83KUjk-s9Qm_EM_2RwRz_cwbsxchqkln-E_eXQ==",
+        "pwdH": "c9eef79382b10dce36d1234d02543fa75ff7eeffb6db91c1e210f8fd0feb1730"
     }
 ]
