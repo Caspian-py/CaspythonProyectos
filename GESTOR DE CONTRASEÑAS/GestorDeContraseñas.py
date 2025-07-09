@@ -5,7 +5,7 @@
     •	Aprendes: hashing, manejo seguro de datos, persistencia de archivos.
 """
 
-import hashlib, os, json
+import hashlib, os, json, time, pyperclip
 from getpass import getpass
 from cryptography.fernet import Fernet
 
@@ -135,6 +135,8 @@ def main_usuario(ussid):
             main_modificar_pwd(ussid)
         elif opt in ("eliminar", "borrar", "delete"):
             main_eliminar_pwd(ussid)
+        elif opt in ("ver", "ver contraseña", "mostrar"):
+            main_ver(ussid)
         elif opt in ("cerrar", "cerrar sesion"):
             return
 
@@ -300,7 +302,36 @@ def main_eliminar_pwd(ussid):
         if input("DESEAS ELIMINAR MAS? (s/n): ").strip() == "n":
             return
 
+def main_ver(ussid):
+    while True:
+        clear()
+        print("MOSTRAR CONTRASEÑA")
+        mostrar_list_pwd(ussid)
+        print()
+        print("ID DEL SERVICIO PARA VER LA CONTRASEÑA (0 para salir): ")
+        try:
+            id = int(input(">>> ").strip())
+            if id == 0:
+                return
+            if id < 0 or id > len(list_claveM):
+                raise ValueError
+        except ValueError:
+            input("ID NO VALIDO")
+            continue
 
+        ide = id - 1
+
+        fernet = Fernet(usuarios[ussid]['key'].encode())
+        pwdC = list_claveM[ide]['pwdC'].encode()
+        pwd = fernet.decrypt(pwdC).decode()
+        input("TIENES 5 SEG PARA VER LA CONTRASEÑA, TAMBIEN PUEDES REVISAR TU PORTAPAPELERA. (continuar enter)")
+        clear()
+        print(f"🔑 CONTRASEÑA: {pwd}")
+        pyperclip.copy(pwd)
+        time.sleep(5)
+        clear()
+        if input("DESEAR VER OTRA CONTRSEÑA? (s/n): ").strip() == "n":
+            return
 
 def main():
     while True:
