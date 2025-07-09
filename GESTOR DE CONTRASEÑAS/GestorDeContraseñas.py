@@ -157,25 +157,25 @@ def mostrar_list_pwd(ussid):
 def agregar_new_pwd(ussid):
     while True:
         clear()
-        print("REGISTRANDO CONTRASEÑA PARA GUARDAR".center(centro))
-        print("PARA CANCELAR INGRESE 'cancenlar' EN SERVICIO")
+        print("🔐 REGISTRANDO CONTRASEÑA PARA GUARDAR 🔐".center(centro))
+        print("❌ PARA CANCELAR INGRESE 'cancenlar' EN SERVICIO")
         
-        print("SERVICIO:")
+        print("🖥️ SERVICIO:")
         service = input(">>> ").strip()
         if service == "cancelar" or service == "":
             return
         
-        print("USUARIO: ")
+        print("👤 USUARIO: ")
         usser = input(">>> ").strip()
         if usser == "":
-            input("NOMBRE DE USUARIOS INVALIDO")
+            input("⚠️ NOMBRE DE USUARIO INVALIDO")
             continue
         
-        print("CONTRASEÑA:")
+        print("🔑 CONTRASEÑA:")
         pwd = getpass(">>> ").strip()
-        print("REPITE UNA VEZ MAS:")
+        print("🔁 REPITE UNA VEZ MAS:")
         if getpass(">>> ").strip() != pwd:
-            input("CONTRASEÑAS DIFERENTES, POR FAVOR VUELVE A INTENTARLO DE NUEVO.")
+            input("⚠️ LAS CONTRASEÑAS NO COINCIDEN")
             continue
 
         fernet = Fernet(usuarios[ussid]['key'].encode())
@@ -184,7 +184,7 @@ def agregar_new_pwd(ussid):
         pwdH = hashlib.sha256(pwd.encode()).hexdigest()
 
         if any(usser == u['usser'] and pwdH == u['pwdH'] for u in list_claveM):
-            input("USUARIO Y CONTRASEÑA YA ESTAN REGISTRADAS.")
+            input("⚠️ USUARIO Y CONTRASEÑA YA ESTAN REGISTRADAS.")
             continue
         else:
             list_claveM.append(
@@ -196,31 +196,31 @@ def agregar_new_pwd(ussid):
                 }
             )
             guardar_pwd(ussid)
-            input("AGREGADO CORRECCTAMENTE")
+            input("✅ CONTRASEÑA GUARDADA EXITOSAMENTE")
             return
         
 def modificar_pwd(ussid, idm):
     while True:
         clear()
-        print("MODIFICANDO")
-        print("ingresa cancelar o enter para salir")
+        print("✏️ MODIFICANDO CONTRASEÑA ✏️")
+        print("❌ INGRESA (cancelar) O PRESIONA (enter) PARA SALIR")
 
-        print("SERVICIO: ")
+        print("🖥️ SERVICIO NUEVO:")
         service = input(">>> ").strip()
         if service == "cancelar" or service ==  "":
             return
         
-        print("USUARIO NUEVO:")
+        print("👤 USUARIO NUEVO:")
         usser = input(">>> ").strip()
         if usser == "":
             input("NOMBRE DE USUARIO INVALIDO")
             continue
 
-        print("CONTRASEÑA NUEVA:")
+        print("🔑 CONTRASEÑA NUEVA:")
         pwd = getpass(">>> ").strip()
-        print("REPITE UNA VEZ MAS: ")
+        print("🔁 REPITE UNA VEZ MAS: ")
         if getpass(">>> ").strip() != pwd:
-            input("CONTRASEÑAS DIFERENTES, POR FAVOR VUELVE A INTENTARLO DE NUEVO. ")
+            input("⚠️ LAS CONTRASEÑAS NO COINCIDEN")
             continue
         fernet = Fernet(usuarios[ussid]['key'].encode())
         pwdC = fernet.encrypt(pwd.encode())
@@ -228,10 +228,10 @@ def modificar_pwd(ussid, idm):
         pwdH = hashlib.sha256(pwd.encode()).hexdigest()
 
         if any(usser == u['usser'] and pwdH == u['pwdH'] for u in list_claveM):
-            input("USUARIO Y CONTRASEÑA YA ESTAN REGISTRADOS.")
+            input("⚠️ USUARIO Y CONTRASEÑA YA EXISTEN")
             continue
         else:
-            print("DIGITA LA CLAVE MAESTRA PARA GUARDAR LOS CAMBIOS (solo 1 intento): ")
+            print("🔐 INGRESA LA CLAVE MAESTRA PARA CONFIRMAR (1 intento): ")
             clave = getpass(">>> ").strip()
             claveM = hashlib.sha256(clave.encode()).hexdigest()
             if claveM == usuarios[ussid]['claveM']:
@@ -240,18 +240,18 @@ def modificar_pwd(ussid, idm):
                 list_claveM[idm]['pwdC'] = pwdC.decode()
                 list_claveM[idm]['pwdH'] = pwdH
                 guardar_pwd(ussid)
-                input("MODIFICADO CORRECTAMENTE.")
+                input("✅ MODIFICACION EXITOSA")
                 return
             else:
-                input("CLAVE MAESTRA ICNORRECTA.")
+                input("❌ CLAVE MAESTRA ICNORRECTA.")
                 return
         
 def main_modificar_pwd(ussid):
     while True:
         clear()
-        print("MODIFICAR CONTRASEÑA".center(centro))
+        print("✏️ MODIFICAR CONTRASEÑA ✏️".center(centro))
         mostrar_list_pwd(ussid)
-        print("DIGITA EL ID A MODIFICAR (0 para salir):")
+        print("🔢 DIGITA EL ID A MODIFICAR (0 para salir):")
         try:
             id = int(input(">>> ").strip())
             if id in (0, ""):
@@ -259,35 +259,35 @@ def main_modificar_pwd(ussid):
             if id < 0 or id > len(list_claveM):
                 raise ValueError
         except ValueError:
-            input("ID NO VALIDO ")
+            input("⚠️ ID NO VALIDO ")
             continue
         idm = id - 1
         modificar_pwd(ussid, idm)
-        if input("DESEAS MODIFICAR MAS? (s/n): ").strip() == "n":
+        if input("🔁 DESEAS MODIFICAR OTRA CONTRASEÑA? (s/n): ").strip() == "n":
             return
         
 def eliminar_pwd(ussid, ide):
     while True:
         clear()
-        print("ELIMINANDO: ")
-        print("INGRESA LA CLAVE MAESTRA PARA ELIMINAR (solo 1 intento): ")
+        print("🗑️ ELIMINANDO CONTRASEÑA 🗑️")
+        print("🔐 INGRESA LA CLAVE MAESTRA PARA ELIMINAR (1 intento): ")
         clave = getpass(">>> ").strip()
         claveM = hashlib.sha256(clave.encode()).hexdigest()
         if claveM == usuarios[ussid]['claveM']:
             list_claveM.pop(ide)
             guardar_pwd(ussid)
-            input("ELIMINADO CORRECTAMENTE")
+            input("✅ ELIMINADO CORRECTAMENTE")
             return
         else:
-            input("CLAVE MAESTRA INCORRECTA")
+            input("❌ CLAVE MAESTRA INCORRECTA")
             return
 
 def main_eliminar_pwd(ussid):
     while True:
         clear()
-        print("ELIMINAR CONTRASEÑA".center(centro))
+        print("🗑️ ELIMINAR CONTRASEÑA 🗑️".center(centro))
         mostrar_list_pwd(ussid)
-        print("DIGITA EL ID A ELIMINAR (O para salir): ")
+        print("🔢 DIGITA EL ID A ELIMINAR (O para salir): ")
         try:
             id = int(input(">>> ").strip())
             if id in (0, ""):
@@ -295,20 +295,20 @@ def main_eliminar_pwd(ussid):
             if id < 0 or id > len(list_claveM):
                 raise ValueError
         except ValueError:
-            input("ID NO VLAIDO")
+            input("❌ ID NO VLAIDO")
             continue
         ide = id - 1
         eliminar_pwd(ussid, ide)
-        if input("DESEAS ELIMINAR MAS? (s/n): ").strip() == "n":
+        if input("🔁 DESEAS ELIMINAR MAS? (s/n): ").strip() == "n":
             return
 
 def main_ver(ussid):
     while True:
         clear()
-        print("MOSTRAR CONTRASEÑA")
+        print("👀 MOSTRAR CONTRASEÑA 👀")
         mostrar_list_pwd(ussid)
         print()
-        print("ID DEL SERVICIO PARA VER LA CONTRASEÑA (0 para salir): ")
+        print("🔢 ID DEL SERVICIO PARA VER LA CONTRASEÑA (0 para salir): ")
         try:
             id = int(input(">>> ").strip())
             if id == 0:
@@ -316,7 +316,7 @@ def main_ver(ussid):
             if id < 0 or id > len(list_claveM):
                 raise ValueError
         except ValueError:
-            input("ID NO VALIDO")
+            input("❌ ID NO VALIDO")
             continue
 
         ide = id - 1
@@ -324,13 +324,13 @@ def main_ver(ussid):
         fernet = Fernet(usuarios[ussid]['key'].encode())
         pwdC = list_claveM[ide]['pwdC'].encode()
         pwd = fernet.decrypt(pwdC).decode()
-        input("TIENES 5 SEG PARA VER LA CONTRASEÑA, TAMBIEN PUEDES REVISAR TU PORTAPAPELERA. (continuar enter)")
+        input("⏳ TIENES 5 SEG PARA VER LA CONTRASEÑA, TAMBIEN SE COPIO AL PORTAPAPELES. (presiona enter)")
         clear()
         print(f"🔑 CONTRASEÑA: {pwd}")
         pyperclip.copy(pwd)
         time.sleep(5)
         clear()
-        if input("DESEAR VER OTRA CONTRSEÑA? (s/n): ").strip() == "n":
+        if input("🔁 DESEAR VER OTRA CONTRSEÑA? (s/n): ").strip() == "n":
             return
 
 def main():
