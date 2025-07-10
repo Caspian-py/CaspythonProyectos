@@ -332,7 +332,7 @@ def main_ver(ussid):
         clear()
         if input("🔁 DESEAR VER OTRA CONTRASEÑA? (s/n): ").strip() == "n":
             return
-
+ 
 def main():
     while True:
         clear()

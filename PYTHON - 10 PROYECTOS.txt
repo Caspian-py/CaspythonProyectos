@@ -12,13 +12,6 @@ ________________________________________
 •	Funcionalidades: guardar contraseñas encriptadas, buscarlas por servicio
 •	Módulos: hashlib o cryptography, json
 •	Aprendes: hashing, manejo seguro de datos, persistencia de archivos.
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-PROYECTO INTERUMPIDO, HAREMOS UN PROYECTO PARA APRENDER ASISTENTE DE PLANILLA.
-INFORMACION: .... 
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 ________________________________________
 🔹 4. Conversor de divisas en consola con API
 •	Módulos: requests
