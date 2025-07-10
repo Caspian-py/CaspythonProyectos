@@ -158,7 +158,7 @@ def agregar_new_pwd(ussid):
     while True:
         clear()
         print("🔐 REGISTRANDO CONTRASEÑA PARA GUARDAR 🔐".center(centro))
-        print("❌ PARA CANCELAR INGRESE 'cancenlar' EN SERVICIO")
+        print("❌ PARA CANCELAR INGRESE 'cancelar' EN SERVICIO")
         
         print("🖥️ SERVICIO:")
         service = input(">>> ").strip()
@@ -243,7 +243,7 @@ def modificar_pwd(ussid, idm):
                 input("✅ MODIFICACION EXITOSA")
                 return
             else:
-                input("❌ CLAVE MAESTRA ICNORRECTA.")
+                input("❌ CLAVE MAESTRA INCORRECTA ")
                 return
         
 def main_modificar_pwd(ussid):
@@ -330,12 +330,13 @@ def main_ver(ussid):
         pyperclip.copy(pwd)
         time.sleep(5)
         clear()
-        if input("🔁 DESEAR VER OTRA CONTRSEÑA? (s/n): ").strip() == "n":
+        if input("🔁 DESEAR VER OTRA CONTRASEÑA? (s/n): ").strip() == "n":
             return
 
 def main():
     while True:
         clear()
+        print("GESTOR DE CONTRASEÑAS - CASPIAN".center(centro))
         print("-" * 30)
         print("🔐 INICIAR SESION")
         print("📝 REGISTRARSE")
